@@ -1,0 +1,30 @@
+{
+  "name": "vue-image-zoom",
+  "version": "1.0.0",
+  "description": "A vue-based image viewer plugin with zooming",
+  "author": "陈广骏 <alex_chen63@hotmail.com>",
+  "private": true,
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "peerDependencies": {
+    "rollup": "^0.41.6"
+  },
+  "dependencies": {
+    "vue": "^2.4.2"
+  },
+  "devDependencies": {
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-latest": "^6.24.0",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-less": "^0.1.3",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-plugin-uglify": "^1.0.1",
+    "rollup-plugin-vue": "^2.4.0",
+    "rollup-watch": "^3.2.2",
+    "uglify-js-harmony": "^2.7.5"
+  }
+}
