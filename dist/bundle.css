@@ -10,18 +10,22 @@
   position: fixed;
   top: 5%;
   right: 5%;
+  z-index: 10;
   box-sizing: border-box;
   display: block;
   width: 24px;
   height: 24px;
-  border: 2px solid #ccc;
+  border: 2px solid #ddd;
   border-radius: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  cursor: default;
 }
 .__image-zoom__close {
   color: #ccc;
   text-align: center;
   line-height: 20px;
   font-weight: bold;
+  cursor: default;
 }
 .__image-zoom__container {
   display: flex;
@@ -44,13 +48,15 @@
   box-sizing: border-box;
   display: inline-block;
   text-align: center;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
 }
 .__image-zoom__scale {
   display: inline-block;
   width: 6em;
   padding: 4px 0;
   text-align: center;
-  color: #eee;
+  color: #fff;
   font-size: 16px;
 }
 .__image-zoom__scaleButton {
@@ -58,9 +64,9 @@
   width: 2em;
   padding: 4px 0;
   text-align: center;
-  color: #eee;
+  color: #fff;
   font-size: 16px;
-  border: 2px solid #ccc;
+  border: 2px solid #ddd;
   background: transparent;
 }
 .__image-zoom__scaleButton:disabled {

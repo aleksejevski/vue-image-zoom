@@ -4,7 +4,7 @@
       .__image-zoom__close_container(@click.stop="close")
         .__image-zoom__close &times;
       .__image-zoom__container
-        img(:src="src",:style="'transform: scale(' + scale + ')'").__image-zoom__image
+        img(:src="src",:style="'transform: scale(' + scale + ')'", ref="img", @load="autoScaleCalc()").__image-zoom__image
       .__image-zoom__scale_container(v-if="allowZoom")
         .__image-zoom__scaler
           button.__image-zoom__scaleButton.__image-zoom__scaleButton-l(@click="scaleDown", :disabled="!canScaleDown") -
@@ -15,6 +15,7 @@
 <script>
 
 const scaleList = [25, 33, 50, 67, 75, 100, 110, 125, 150, 200, 250, 300, 400, 600, 800];
+const defaultScale = 5;
 
 export default {
   data () {
@@ -74,6 +75,11 @@ export default {
       }
     },
 
+    setScale (scale) {
+      if (scale >= 0 && scale <= scaleList.length - 1) {
+        this.scaleLevel = scale;
+      }
+    },
     scaleDown () {
       if (this.canScaleDown) {
         this.scaleLevel--;
@@ -84,12 +90,40 @@ export default {
         this.scaleLevel++;
       }
     },
+    resetScale () {
+      this.scaleLevel = defaultScale;
+    },
+    autoScaleCalc () {
+      const windowHeight = window.innerHeight;  // 974
+      const windowWidth = window.innerWidth;    // 1366
+
+      const $img = this.$refs.img;
+      const imgHeight = $img.offsetHeight;      // 2000
+      const imgWidth = $img.offsetWidth;        // 1414
+
+      let currentScale = defaultScale;
+      // Step 1: Is the image widther than the screen? If yes, scale down until it's suitable.
+      for (currentScale; currentScale > 0; currentScale--){
+        let currentWidth = imgWidth * scaleList[currentScale] / 100
+        if (currentWidth < windowWidth) break;
+      }
+      
+      // Step 2: Is it higher? If yes, do so.
+      if (currentScale > 0){ // It's meaningless to deal with a zero
+        for (currentScale; currentScale > 0; currentScale--){
+          let currentHeight = imgHeight * scaleList[currentScale] / 100
+          if (currentHeight < windowHeight) break;
+        }
+      }
+      
+      // Step 3: Set scale
+      this.setScale(currentScale);
+    },
 
     close () {
       this.closed = true;
     },
-
-  }
+  },
 }
 </script>
 
@@ -107,19 +141,24 @@ export default {
     position:       fixed;
     top:            5%;
     right:          5%;
+    z-index:        10;
 
     box-sizing:     border-box;
     display:        block;
     width:          24px;
     height:         24px;
-    border:         2px solid #ccc;
+    border:         2px solid #ddd;
     border-radius:  12px;
+    background:     rgba(0, 0, 0, .2);
+    cursor:         default;
   }
   .__image-zoom__close {
     color:          #ccc;
     text-align:     center;
     line-height:    20px;
     font-weight:    bold;
+
+    cursor:         default;
   }
   .__image-zoom__container {
     display:          flex;
@@ -145,14 +184,15 @@ export default {
     box-sizing:     border-box;
     display:        inline-block;
     text-align:     center;
+    background:     rgba(0, 0, 0, .05);
+    border-radius:  6px;
   }
   .__image-zoom__scale {
-    // box-sizing:     border-box;
     display:        inline-block;
     width:          6em;
     padding:        4px 0;
     text-align:     center;
-    color:          #eee;
+    color:          #fff;
     font-size:      16px;
   }
   .__image-zoom__scaleButton {
@@ -160,9 +200,9 @@ export default {
     width:          2em;
     padding:        4px 0;
     text-align:     center;
-    color:          #eee;
+    color:          #fff;
     font-size:      16px;
-    border:         2px solid #ccc;
+    border:         2px solid #ddd;
     background:     transparent;
 
     &:disabled {
