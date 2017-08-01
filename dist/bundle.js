@@ -7394,7 +7394,7 @@ var scaleList = [25, 33, 50, 67, 75, 100, 110, 125, 150, 200, 250, 300, 400, 600
 var viewerComponent = { render: function render() {
     var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('transition', { attrs: { "name": "image-zoom-fade" }, on: { "before-enter": _vm.lockScroll } }, [_c('div', { directives: [{ name: "show", rawName: "v-show", value: _vm.visible, expression: "visible" }], staticClass: "__image-zoom__modal", attrs: { "id": _vm.id }, on: { "click": _vm.modalClicked } }, [_c('div', { staticClass: "__image-zoom__close_container", on: { "click": function click($event) {
           $event.stopPropagation();_vm.close($event);
-        } } }, [_c('div', { staticClass: "__image-zoom__close" }, [_vm._v("×")])]), _c('div', { staticClass: "__image-zoom__container" }, [_c('img', { staticClass: "__image-zoom__image", style: 'transform: scale(' + _vm.scale + ')', attrs: { "src": _vm.src } })]), _vm.allowZoom ? _c('div', { staticClass: "__image-zoom__scale_container" }, [_c('div', { staticClass: "__image-zoom__scaler" }, [_c('button', { on: { "click": _vm.scaleDown } }, [_vm._v("-")]), _c('span', [_vm._v(_vm._s(_vm.scaleToShow))]), _c('button', { on: { "click": _vm.scaleUp } }, [_vm._v("+")])])]) : _vm._e()])]);
+        } } }, [_c('div', { staticClass: "__image-zoom__close" }, [_vm._v("×")])]), _c('div', { staticClass: "__image-zoom__container" }, [_c('img', { staticClass: "__image-zoom__image", style: 'transform: scale(' + _vm.scale + ')', attrs: { "src": _vm.src } })]), _vm.allowZoom ? _c('div', { staticClass: "__image-zoom__scale_container" }, [_c('div', { staticClass: "__image-zoom__scaler" }, [_c('button', { staticClass: "__image-zoom__scaleButton __image-zoom__scaleButton-l", attrs: { "disabled": !_vm.canScaleDown }, on: { "click": _vm.scaleDown } }, [_vm._v("-")]), _c('span', { staticClass: "__image-zoom__scale" }, [_vm._v(_vm._s(_vm.scaleToShow))]), _c('button', { staticClass: "__image-zoom__scaleButton __image-zoom__scaleButton-r", attrs: { "disabled": !_vm.canScaleUp }, on: { "click": _vm.scaleUp } }, [_vm._v("+")])])]) : _vm._e()])]);
   }, staticRenderFns: [],
   data: function data() {
     return {
@@ -7419,6 +7419,12 @@ var viewerComponent = { render: function render() {
     },
     scale: function scale() {
       return scaleList[this.scaleLevel] / 100;
+    },
+    canScaleDown: function canScaleDown() {
+      return this.scaleLevel > 0;
+    },
+    canScaleUp: function canScaleUp() {
+      return this.scaleLevel < scaleList.length - 1;
     }
   },
   watch: {
@@ -7447,12 +7453,12 @@ var viewerComponent = { render: function render() {
       }
     },
     scaleDown: function scaleDown() {
-      if (this.scaleLevel > 0) {
+      if (this.canScaleDown) {
         this.scaleLevel--;
       }
     },
     scaleUp: function scaleUp() {
-      if (this.scaleLevel < scaleList.length - 1) {
+      if (this.canScaleUp) {
         this.scaleLevel++;
       }
     },

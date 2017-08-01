@@ -7,9 +7,9 @@
         img(:src="src",:style="'transform: scale(' + scale + ')'").__image-zoom__image
       .__image-zoom__scale_container(v-if="allowZoom")
         .__image-zoom__scaler
-          button(@click="scaleDown") -
-          span {{ scaleToShow }}
-          button(@click="scaleUp") +
+          button.__image-zoom__scaleButton.__image-zoom__scaleButton-l(@click="scaleDown", :disabled="!canScaleDown") -
+          span.__image-zoom__scale {{ scaleToShow }}
+          button.__image-zoom__scaleButton.__image-zoom__scaleButton-r(@click="scaleUp", :disabled="!canScaleUp") +
 </template>
 
 <script>
@@ -39,6 +39,12 @@ export default {
     },
     scale () {
       return scaleList[this.scaleLevel] / 100 ;
+    },
+    canScaleDown () {
+      return this.scaleLevel > 0;
+    },
+    canScaleUp () {
+      return this.scaleLevel < scaleList.length - 1
     }
   },
   watch: {
@@ -69,12 +75,12 @@ export default {
     },
 
     scaleDown () {
-      if (this.scaleLevel > 0) {
+      if (this.canScaleDown) {
         this.scaleLevel--;
       }
     },
     scaleUp () {
-      if (this.scaleLevel < scaleList.length - 1) {
+      if (this.canScaleUp) {
         this.scaleLevel++;
       }
     },
@@ -95,23 +101,25 @@ export default {
     height:     100%;
     width:      100%;
 
-    background: rgba(0, 0, 0, .75);
+    background: rgba(0, 0, 0, .8);
   }
   .__image-zoom__close_container {
-    position:   fixed;
-    top:        5%;
-    right:      5%;
+    position:       fixed;
+    top:            5%;
+    right:          5%;
+
+    box-sizing:     border-box;
+    display:        block;
+    width:          24px;
+    height:         24px;
+    border:         2px solid #ccc;
+    border-radius:  12px;
   }
   .__image-zoom__close {
-    display:        block;
-    width:          16px;
-    height:         16px;
-    border:         1px solid #ccc;
-    border-radius:  8px;
-
     color:          #ccc;
     text-align:     center;
-    line-height:    1;
+    line-height:    20px;
+    font-weight:    bold;
   }
   .__image-zoom__container {
     display:          flex;
@@ -134,8 +142,45 @@ export default {
   }
 
   .__image-zoom__scaler {
-    display:    inline-block;
-    color:      #eee;
+    box-sizing:     border-box;
+    display:        inline-block;
+    text-align:     center;
+  }
+  .__image-zoom__scale {
+    // box-sizing:     border-box;
+    display:        inline-block;
+    width:          6em;
+    padding:        4px 0;
+    text-align:     center;
+    color:          #eee;
+    font-size:      16px;
+  }
+  .__image-zoom__scaleButton {
+    display:        inline-block;
+    width:          2em;
+    padding:        4px 0;
+    text-align:     center;
+    color:          #eee;
+    font-size:      16px;
+    border:         2px solid #ccc;
+    background:     transparent;
+
+    &:disabled {
+      color:        #888;
+      border-color: #888;
+    }
+  }
+  .__image-zoom__scaleButton-l {
+    border-top-left-radius:     6px;
+    border-bottom-left-radius:  6px;
+  }
+  .__image-zoom__scaleButton-r {
+    border-top-right-radius:    6px;
+    border-bottom-right-radius: 6px;
+  }
+  .__image-zoom__scaler {
+    box-sizing:     border-box;
+    display:        inline-block;
   }
 </style>
 
