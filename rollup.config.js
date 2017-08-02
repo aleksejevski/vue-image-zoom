@@ -11,7 +11,7 @@ export default {
 	format: 'cjs',
 
 	// Default output destination
-	dest: 	'dist/bundle.js',
+	dest: 	'dist/vue-image-zoom.js',
 	plugins: [
 		resolve({ jsnext: true }),
 		commonjs(),

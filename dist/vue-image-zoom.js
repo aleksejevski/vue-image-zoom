@@ -7389,15 +7389,15 @@ var rGen = function () {
 	return randomId;
 };
 
-var scaleList = [25, 33, 50, 67, 75, 100, 110, 125, 150, 200, 250, 300, 400, 600, 800];
-var defaultScale = 5;
+var scaleList = [25, 30, 33, 40, 50, 60, 67, 75, 90, 100, 110, 125, 150, 200, 250, 300, 400, 600, 800];
+var defaultScale = 10;
 
 var viewerComponent = { render: function render() {
-    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('transition', { attrs: { "name": "image-zoom-fade" }, on: { "before-enter": _vm.lockScroll } }, [_c('div', { directives: [{ name: "show", rawName: "v-show", value: _vm.visible, expression: "visible" }], staticClass: "__image-zoom__modal", attrs: { "id": _vm.id }, on: { "click": _vm.modalClicked } }, [_c('div', { staticClass: "__image-zoom__close_container", on: { "click": function click($event) {
+    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('transition', { attrs: { "name": "image-zoom-fade" }, on: { "before-enter": _vm.lockScroll } }, [_c('div', { directives: [{ name: "show", rawName: "v-show", value: _vm.visible, expression: "visible" }], staticClass: "__image-zoom__modal", attrs: { "id": _vm.id }, on: { "click": _vm.modalClicked } }, [_c('div', { staticClass: "__image-zoom__close-container", on: { "click": function click($event) {
           $event.stopPropagation();_vm.close($event);
-        } } }, [_c('div', { staticClass: "__image-zoom__close" }, [_vm._v("×")])]), _c('div', { staticClass: "__image-zoom__container" }, [_c('img', { ref: "img", staticClass: "__image-zoom__image", style: 'transform: scale(' + _vm.scale + ')', attrs: { "src": _vm.src }, on: { "load": function load($event) {
+        } } }, [_c('div', { staticClass: "__image-zoom__close" }, [_vm._v("×")])]), _c('div', { staticClass: "__image-zoom__img-container", style: { 'align-items': _vm.alignItems } }, [_c('img', { ref: "img", staticClass: "__image-zoom__image", style: { width: _vm.scaledWidth, height: _vm.scaledHeight }, attrs: { "src": _vm.src }, on: { "load": function load($event) {
           _vm.autoScaleCalc();
-        } } })]), _vm.allowZoom ? _c('div', { staticClass: "__image-zoom__scale_container" }, [_c('div', { staticClass: "__image-zoom__scaler" }, [_c('button', { staticClass: "__image-zoom__scaleButton __image-zoom__scaleButton-l", attrs: { "disabled": !_vm.canScaleDown }, on: { "click": _vm.scaleDown } }, [_vm._v("-")]), _c('span', { staticClass: "__image-zoom__scale" }, [_vm._v(_vm._s(_vm.scaleToShow))]), _c('button', { staticClass: "__image-zoom__scaleButton __image-zoom__scaleButton-r", attrs: { "disabled": !_vm.canScaleUp }, on: { "click": _vm.scaleUp } }, [_vm._v("+")])])]) : _vm._e()])]);
+        } } })]), _vm.allowZoom ? _c('div', { staticClass: "__image-zoom__scale-container" }, [_c('div', { staticClass: "__image-zoom__scaler" }, [_c('button', { staticClass: "__image-zoom__scaleButton __image-zoom__scaleButton-l", attrs: { "disabled": !_vm.canScaleDown }, on: { "click": _vm.scaleDown } }, [_vm._v("-")]), _c('span', { staticClass: "__image-zoom__scale" }, [_vm._v(_vm._s(_vm.scaleToShow))]), _c('button', { staticClass: "__image-zoom__scaleButton __image-zoom__scaleButton-r", attrs: { "disabled": !_vm.canScaleUp }, on: { "click": _vm.scaleUp } }, [_vm._v("+")])])]) : _vm._e()])]);
   }, staticRenderFns: [],
   data: function data() {
     return {
@@ -7408,11 +7408,16 @@ var viewerComponent = { render: function render() {
       src: null,
 
       allowZoom: true,
-      scaleLevel: 5,
+      autoScale: true,
+      scaleLevel: 10,
 
       closeOnClickModal: true,
 
-      closed: false
+      closed: false,
+
+      _defaultWidth: 0,
+      _defaultHeight: 0,
+      _initialized: false
     };
   },
 
@@ -7420,14 +7425,22 @@ var viewerComponent = { render: function render() {
     scaleToShow: function scaleToShow() {
       return scaleList[this.scaleLevel] + ' %';
     },
-    scale: function scale() {
-      return scaleList[this.scaleLevel] / 100;
+    scaledWidth: function scaledWidth() {
+      return this._defaultWidth * scaleList[this.scaleLevel] / 100 + 'px';
+    },
+    scaledHeight: function scaledHeight() {
+      return this._defaultHeight * scaleList[this.scaleLevel] / 100 + 'px';
     },
     canScaleDown: function canScaleDown() {
       return this.scaleLevel > 0;
     },
     canScaleUp: function canScaleUp() {
       return this.scaleLevel < scaleList.length - 1;
+    },
+    alignItems: function alignItems() {
+      var windowHeight = window.innerHeight;
+      var scaledHeight = this._defaultHeight * scaleList[this.scaleLevel] / 100;
+      return windowHeight >= scaledHeight ? 'center' : 'baseline';
     }
   },
   watch: {
@@ -7474,28 +7487,35 @@ var viewerComponent = { render: function render() {
       this.scaleLevel = defaultScale;
     },
     autoScaleCalc: function autoScaleCalc() {
-      var windowHeight = window.innerHeight;
-      var windowWidth = window.innerWidth;
-
       var $img = this.$refs.img;
-      var imgHeight = $img.offsetHeight;
-      var imgWidth = $img.offsetWidth;
-
-      var currentScale = defaultScale;
-
-      for (currentScale; currentScale > 0; currentScale--) {
-        var currentWidth = imgWidth * scaleList[currentScale] / 100;
-        if (currentWidth < windowWidth) break;
+      if (!this._initialized) {
+        this._defaultHeight = $img.offsetHeight;
+        this._defaultWidth = $img.offsetWidth;
+        this._initialized = true;
       }
+      if (this.autoScale) {
+        var windowHeight = window.innerHeight;
+        var windowWidth = window.innerWidth;
 
-      if (currentScale > 0) {
+        var imgHeight = $img.offsetHeight;
+        var imgWidth = $img.offsetWidth;
+
+        var currentScale = defaultScale;
+
         for (currentScale; currentScale > 0; currentScale--) {
-          var currentHeight = imgHeight * scaleList[currentScale] / 100;
-          if (currentHeight < windowHeight) break;
+          var currentWidth = imgWidth * scaleList[currentScale] / 100;
+          if (currentWidth < windowWidth) break;
         }
-      }
 
-      this.setScale(currentScale);
+        if (currentScale > 0) {
+          for (currentScale; currentScale > 0; currentScale--) {
+            var currentHeight = imgHeight * scaleList[currentScale] / 100;
+            if (currentHeight < windowHeight) break;
+          }
+        }
+
+        this.setScale(currentScale);
+      }
     },
     close: function close() {
       this.closed = true;

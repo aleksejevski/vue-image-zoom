@@ -2,7 +2,7 @@
   "name": "vue-image-zoom",
   "version": "1.0.0",
   "description": "A vue-based image viewer plugin with zooming",
-  "author": "陈广骏 <alex_chen63@hotmail.com>",
+  "author": "Alex Aleksejevski <alex_chen63@hotmail.com>",
   "private": true,
   "scripts": {
     "build": "rollup -c"
