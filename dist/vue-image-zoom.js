@@ -5870,6 +5870,8 @@ var klass = {
 
 /*  */
 
+// in some cases, the event used has to be determined at runtime
+// so we used some reserved tokens during compile.
 var RANGE_TOKEN = '__r';
 var CHECKBOX_RADIO_TOKEN = '__c';
 
@@ -7372,8 +7374,6 @@ setTimeout(function () {
     );
   }
 }, 0);
-
-/*  */
 
 var rGen = function () {
 	var length = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 8;

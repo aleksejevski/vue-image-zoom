@@ -1,6 +1,7 @@
 import babel from 'rollup-plugin-babel';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
+import alias from 'rollup-plugin-alias';
 import vue from 'rollup-plugin-vue';
 
 export default {
@@ -15,6 +16,9 @@ export default {
 	plugins: [
 		resolve({ jsnext: true }),
 		commonjs(),
+		alias({
+			'vue$': 'vue/dist/vue.esm.js',
+		}),
 		vue({
 			compileTemplate: true,
 			css: null,

@@ -17,29 +17,26 @@
 const scaleList = [25, 30, 33, 40, 50, 60, 67, 75, 90, 100, 110, 125, 150, 200, 250, 300, 400, 600, 800];
 const defaultScale = 10;
 
-// let defaultWidth = 0, defaultHeight = 0;
-
-
 export default {
   data () {
     return {
-      visible:      false,
-      customClass:  '',
-      id:           '',
+      visible:        false,
+      customClass:    '',
+      id:             '',
 
-      src:          null,
+      src:            null,
 
-      allowZoom:    true,
-      autoScale:    true,
-      scaleLevel:   10,
+      allowZoom:      true,
+      autoScale:      true,
+      scaleLevel:     10,
 
       closeOnClickModal: true,
 
-      closed:       false,
+      closed:         false,
 
       _defaultWidth:  0,
       _defaultHeight: 0,
-      _initialized:        false,
+      _initialized:   false,
     }
   },
   computed: {
