@@ -2,6 +2,7 @@ import babel from 'rollup-plugin-babel';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import alias from 'rollup-plugin-alias';
+import replace from 'rollup-plugin-replace';
 import vue from 'rollup-plugin-vue';
 
 export default {
@@ -14,6 +15,9 @@ export default {
 	// Default output destination
 	dest: 	'dist/vue-image-zoom.js',
 	plugins: [
+		replace({
+      'process.env.NODE_ENV': JSON.stringify('production')
+		}),
 		resolve({ jsnext: true }),
 		commonjs(),
 		alias({
