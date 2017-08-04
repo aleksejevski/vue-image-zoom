@@ -15,7 +15,7 @@
 <script>
 
 const scaleList = [25, 30, 33, 40, 50, 60, 67, 75, 90, 100, 110, 125, 150, 200, 250, 300, 400, 600, 800];
-const defaultScale = 10;
+const defaultScale = 9;
 
 export default {
   data () {
@@ -27,7 +27,7 @@ export default {
 
       allowZoom:      true,
       autoScale:      true,
-      scaleLevel:     10,
+      scaleLevel:     defaultScale,
 
       closeOnClickModal: true,
 
@@ -56,7 +56,7 @@ export default {
     },
     alignItems () {
       const windowHeight = window.innerHeight;
-      const scaledHeight = (this._defaultHeight * scaleList[this.scaleLevel] / 100);
+      const scaledHeight = this._defaultHeight === 0 ? this._defaultHeight * (scaleList[this.scaleLevel] / 100) : 0;
       return windowHeight >= scaledHeight ? 'center' : 'baseline';
     },
   },

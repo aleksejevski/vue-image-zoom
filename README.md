@@ -11,8 +11,8 @@ $ npm install -D vue-image-zoom
 ```JavaScript
 // main.js
 
-import zoom from '../../dist/vue-image-zoom.js';
-import '../../dist/vue-image-zoom.css';
+import zoom from 'vue-image-zoom';
+import 'vue-image-zoom/dist/vue-image-zoom.css';
 
 Vue.use(zoom);
 ```
