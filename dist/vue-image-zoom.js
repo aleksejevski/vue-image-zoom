@@ -460,8 +460,6 @@ function parsePath (path) {
 var warn = noop;
 var formatComponentName = (null); // work around flow check
 
-/*  */
-
 function handleError (err, vm, info) {
   if (config.errorHandler) {
     config.errorHandler.call(null, err, vm, info);
@@ -990,9 +988,6 @@ var strats = config.optionMergeStrategies;
 /**
  * Options with restrictions
  */
-/**
- * Helper that recursively merges two data objects together.
- */
 function mergeData (to, from) {
   if (!from) { return to }
   var key, toVal, fromVal;
@@ -1168,8 +1163,7 @@ var defaultStrat = function (parentVal, childVal) {
 };
 
 /**
- * Ensure all props option syntax are normalized into the
- * Object-based format.
+ * Validate component names
  */
 function normalizeProps (options) {
   var props = options.props;
@@ -1366,9 +1360,7 @@ function getPropDefaultValue (vm, prop, key) {
 }
 
 /**
- * Use function string name to check built-in types,
- * because a simple equality check will fail when running
- * across different vms / iframes.
+ * Assert whether a prop is valid.
  */
 function getType (fn) {
   var match = fn && fn.toString().match(/^\s*function (\w+)/);
@@ -1388,10 +1380,12 @@ function isType (type, fn) {
   return false
 }
 
+/*  */
+
+/* not type checking this file because flow doesn't play well with Proxy */
+
 var mark;
 var measure;
-
-/*  */
 
 var VNode = function VNode (
   tag,
@@ -5360,8 +5354,6 @@ var klass = {
 
 /*  */
 
-// in some cases, the event used has to be determined at runtime
-// so we used some reserved tokens during compile.
 var RANGE_TOKEN = '__r';
 var CHECKBOX_RADIO_TOKEN = '__c';
 
@@ -6861,6 +6853,8 @@ setTimeout(function () {
   }
 }, 0);
 
+/*  */
+
 var rGen = function () {
 	var length = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 8;
 
@@ -6888,7 +6882,6 @@ var viewerComponent = { render: function render() {
   data: function data() {
     return {
       visible: false,
-      customClass: '',
       id: '',
 
       src: null,
@@ -6979,7 +6972,7 @@ var viewerComponent = { render: function render() {
         this._defaultWidth = $img.offsetWidth;
         this._initialized = true;
       }
-      if (this.autoScale) {
+      if (this.allowZoom && this.autoScale) {
         var windowHeight = window.innerHeight;
         var windowWidth = window.innerWidth;
 

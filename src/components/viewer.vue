@@ -21,7 +21,6 @@ export default {
   data () {
     return {
       visible:        false,
-      customClass:    '',
       id:             '',
 
       src:            null,
@@ -113,7 +112,7 @@ export default {
         this._defaultWidth = $img.offsetWidth;        // 1414
         this._initialized = true;
       }
-      if (this.autoScale) {
+      if (this.allowZoom && this.autoScale) {
         const windowHeight = window.innerHeight;  // 974
         const windowWidth = window.innerWidth;    // 1366
         
