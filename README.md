@@ -4,7 +4,9 @@ A vue-based image viewer plugin with zooming
 
 ## Install
 
-Download the ZIP pack or Clone the project, then:
+```
+$ npm install -D vue-image-zoom
+```
 
 ```JavaScript
 // main.js
@@ -14,8 +16,6 @@ import '../../dist/vue-image-zoom.css';
 
 Vue.use(zoom);
 ```
-
-It will be published on NPM soon...maybe
 
 ## Usage
 

@@ -4,6 +4,8 @@ import commonjs from 'rollup-plugin-commonjs';
 import alias from 'rollup-plugin-alias';
 import replace from 'rollup-plugin-replace';
 import vue from 'rollup-plugin-vue';
+import uglify from 'rollup-plugin-uglify';
+// import { minify } from 'uglify-es';
 
 export default {
 	// Default entry
@@ -30,5 +32,6 @@ export default {
 		babel({
 			exclude:	'node_modules/**',
 		}),
+		uglify(),
 	],
 }
