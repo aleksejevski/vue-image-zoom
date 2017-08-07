@@ -1,14 +1,15 @@
 <template lang="pug">
   transition(name="image-zoom-fade", @before-enter="lockScroll")
     .__image-zoom__modal(v-show="visible", @click="modalClicked", :id="id")
-      .__image-zoom__close-container(@click.stop="close")
-        .__image-zoom__close &times;
+      .__image-zoom__close-container
+        button.__image-zoom__close-button(@click.stop="openExternal") ↗
+        button.__image-zoom__close-button(@click.stop="close") &times;
       .__image-zoom__img-container(:style="{ 'align-items': alignItems }")
         img(:src="src",:style="{ width: scaledWidth, height: scaledHeight }", ref="img", @load="autoScaleCalc()").__image-zoom__image
       .__image-zoom__scale-container(v-if="allowZoom")
         .__image-zoom__scaler
           button.__image-zoom__scaleButton.__image-zoom__scaleButton-l(@click="scaleDown", :disabled="!canScaleDown") -
-          span.__image-zoom__scale {{ scaleToShow }}
+          button.__image-zoom__scale(@click="scaleToggle") {{ scaleToShow }}
           button.__image-zoom__scaleButton.__image-zoom__scaleButton-r(@click="scaleUp", :disabled="!canScaleUp") +
 </template>
 
@@ -139,6 +140,18 @@ export default {
       }
     },
 
+    scaleToggle () {
+      if (this.scaleLevel === defaultScale) {
+        this.autoScaleCalc();
+      } else {
+        this.setScale(defaultScale);
+      }
+    },
+
+    openExternal () {
+      window.open(this.src);
+    },
+
     close () {
       this.closed = true;
     },
@@ -147,6 +160,30 @@ export default {
 </script>
 
 <style lang="less">
+  button {
+    min-width:      2em;
+    padding:        4px 0;
+    text-align:     center;
+    color:          #fff;
+    text-shadow:    0px 0px 2px #888;
+    font-size:      16px;
+    line-height:    18px;
+    border:         2px solid #ddd;
+    background:     rgba(0, 0, 0, .1);
+
+    &:first-child {
+      border-top-left-radius:     6px;
+      border-bottom-left-radius:  6px;
+    }
+    &:last-child {
+      border-top-right-radius:    6px;
+      border-bottom-right-radius: 6px;
+    }
+    &:nth-child(n+2) {
+      border-left:    0;
+    }
+  }
+
   .__image-zoom__modal {
     position:   fixed;
     top:        0;
@@ -164,29 +201,16 @@ export default {
 
     box-sizing:     border-box;
     display:        block;
-    width:          24px;
-    height:         24px;
-    border:         2px solid #ddd;
-    border-radius:  12px;
-    background:     rgba(0, 0, 0, .05);
     cursor:         default;
   }
-  .__image-zoom__close {
-    color:          #fff;
-    text-shadow:    0px 0px 2px #888;
-    text-align:     center;
-    line-height:    20px;
-    font-weight:    bold;
 
-    cursor:         default;
-  }
   .__image-zoom__img-container {
-    overflow:   auto;
+    overflow:         auto;
     display:          flex;
     align-items:      center; // 垂直居中
     justify-content:  center; // 水平居中
-    width:      100%;
-    height:     100%;
+    width:            100%;
+    height:           100%;
   }
   .__image-zoom__image {
     display:    block;
@@ -205,42 +229,23 @@ export default {
     box-sizing:     border-box;
     display:        inline-block;
     text-align:     center;
-    background:     rgba(0, 0, 0, .05);
+    background:     rgba(0, 0, 0, .1);
     border-radius:  6px;
   }
   .__image-zoom__scale {
     display:        inline-block;
     width:          6em;
-    padding:        4px 0;
-    text-align:     center;
-    color:          #fff;
-    text-shadow:    0px 0px 2px #888;
-    font-size:      16px;
   }
   .__image-zoom__scaleButton {
     display:        inline-block;
     width:          2em;
-    padding:        4px 0;
-    text-align:     center;
-    color:          #fff;
-    text-shadow:    0px 0px 2px #888;
-    font-size:      16px;
-    border:         2px solid #ddd;
-    background:     transparent;
 
     &:disabled {
       color:        #888;
       border-color: #888;
     }
   }
-  .__image-zoom__scaleButton-l {
-    border-top-left-radius:     6px;
-    border-bottom-left-radius:  6px;
-  }
-  .__image-zoom__scaleButton-r {
-    border-top-right-radius:    6px;
-    border-bottom-right-radius: 6px;
-  }
+  
   .__image-zoom__scaler {
     box-sizing:     border-box;
     display:        inline-block;

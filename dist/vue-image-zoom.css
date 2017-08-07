@@ -1,3 +1,25 @@
+button {
+  min-width: 2em;
+  padding: 4px 0;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0px 0px 2px #888;
+  font-size: 16px;
+  line-height: 18px;
+  border: 2px solid #ddd;
+  background: rgba(0, 0, 0, 0.1);
+}
+button:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+button:last-child {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+button:nth-child(n+2) {
+  border-left: 0;
+}
 .__image-zoom__modal {
   position: fixed;
   top: 0;
@@ -13,19 +35,6 @@
   z-index: 10;
   box-sizing: border-box;
   display: block;
-  width: 24px;
-  height: 24px;
-  border: 2px solid #ddd;
-  border-radius: 12px;
-  background: rgba(0, 0, 0, 0.05);
-  cursor: default;
-}
-.__image-zoom__close {
-  color: #fff;
-  text-shadow: 0px 0px 2px #888;
-  text-align: center;
-  line-height: 20px;
-  font-weight: bold;
   cursor: default;
 }
 .__image-zoom__img-container {
@@ -50,40 +59,20 @@
   box-sizing: border-box;
   display: inline-block;
   text-align: center;
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(0, 0, 0, 0.1);
   border-radius: 6px;
 }
 .__image-zoom__scale {
   display: inline-block;
   width: 6em;
-  padding: 4px 0;
-  text-align: center;
-  color: #fff;
-  text-shadow: 0px 0px 2px #888;
-  font-size: 16px;
 }
 .__image-zoom__scaleButton {
   display: inline-block;
   width: 2em;
-  padding: 4px 0;
-  text-align: center;
-  color: #fff;
-  text-shadow: 0px 0px 2px #888;
-  font-size: 16px;
-  border: 2px solid #ddd;
-  background: transparent;
 }
 .__image-zoom__scaleButton:disabled {
   color: #888;
   border-color: #888;
-}
-.__image-zoom__scaleButton-l {
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-}
-.__image-zoom__scaleButton-r {
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
 }
 .__image-zoom__scaler {
   box-sizing: border-box;
