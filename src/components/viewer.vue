@@ -4,8 +4,9 @@
       .__image-zoom__close-container
         button.__image-zoom__close-button(@click.stop="openExternal") ↗
         button.__image-zoom__close-button(@click.stop="close") &times;
-      .__image-zoom__img-container(:style="{ 'align-items': alignItems }")
-        img(:src="src",:style="{ width: scaledWidth, height: scaledHeight }", ref="img", @load="autoScaleCalc()").__image-zoom__image
+      .__image-zoom__img-outer-container(:style="{ display: verticalCenter ? 'table' : 'block' }")
+        .__image-zoom__img-inner-container(:style="{ display: verticalCenter ? 'table-cell' : 'block' }")
+          img(:src="src",:style="{ width: scaledWidth, height: scaledHeight }", ref="img", @load="autoScaleCalc()").__image-zoom__image
       .__image-zoom__scale-container(v-if="allowZoom")
         .__image-zoom__scaler
           button.__image-zoom__scaleButton.__image-zoom__scaleButton-l(@click="scaleDown", :disabled="!canScaleDown") -
@@ -43,23 +44,23 @@ export default {
     scaleToShow () {
       return scaleList[this.scaleLevel] + ' %';
     },
-    scaledWidth(){
+    scaledWidth () {
       return (this._defaultWidth * scaleList[this.scaleLevel] / 100) + 'px';
     },
-    scaledHeight(){
+    scaledHeight () {
       return (this._defaultHeight * scaleList[this.scaleLevel] / 100) + 'px';
     },
     canScaleDown () {
       return this.scaleLevel > 0;
     },
     canScaleUp () {
-      return this.scaleLevel < scaleList.length - 1
+      return this.scaleLevel < scaleList.length - 1;
     },
-    alignItems () {
-      const windowHeight = window.innerHeight;
-      const scaledHeight = this._defaultHeight === 0 ? this._defaultHeight * (scaleList[this.scaleLevel] / 100) : 0;
-      return windowHeight >= scaledHeight ? 'center' : 'baseline';
-    },
+    verticalCenter () {
+      const windowHeight = parseInt(window.innerHeight);
+      const scaledHeight = parseInt(this._defaultHeight * scaleList[this.scaleLevel] / 100);
+      return windowHeight >= scaledHeight;
+    }
   },
   watch: {
     closed (newVal) {     // If closed, remove all event handles and destroy the element
@@ -68,6 +69,7 @@ export default {
         this.destroyElement();
       }
     },
+
   },
   methods: {
     destroyElement () {
@@ -204,16 +206,19 @@ export default {
     cursor:         default;
   }
 
-  .__image-zoom__img-container {
-    overflow:         auto;
-    display:          flex;
-    align-items:      center; // 垂直居中
-    justify-content:  center; // 水平居中
-    width:            100%;
-    height:           100%;
+  .__image-zoom__img-outer-container {
+    display:    table;
+    overflow:   auto;
+    width:      100%;
+    height:     100%;
+  }
+  .__image-zoom__img-inner-container {
+    display:        table-cell;
+    vertical-align: middle;
+    text-align:     center;
   }
   .__image-zoom__image {
-    display:    block;
+    background:     white;
   }
 
   .__image-zoom__scale-container {

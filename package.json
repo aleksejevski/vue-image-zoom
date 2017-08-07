@@ -1,6 +1,6 @@
 {
   "name": "vue-image-zoom",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A vue-based image viewer plugin with zooming",
   "author": "Alex Aleksejevski <alex_chen63@hotmail.com>",
   "main": "dist/vue-image-zoom.js",

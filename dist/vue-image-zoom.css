@@ -37,16 +37,19 @@ button:nth-child(n+2) {
   display: block;
   cursor: default;
 }
-.__image-zoom__img-container {
+.__image-zoom__img-outer-container {
+  display: table;
   overflow: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
   height: 100%;
 }
+.__image-zoom__img-inner-container {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
 .__image-zoom__image {
-  display: block;
+  background: white;
 }
 .__image-zoom__scale-container {
   position: fixed;
