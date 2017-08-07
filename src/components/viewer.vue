@@ -15,8 +15,8 @@
 
 <script>
 
-const scaleList = [25, 30, 33, 40, 50, 60, 67, 75, 90, 100, 110, 125, 150, 200, 250, 300, 400, 600, 800];
-const defaultScale = 9;
+const scaleList = [10, 25, 30, 33, 40, 50, 60, 67, 75, 90, 100, 110, 125, 150, 200, 250, 300, 400, 600, 800];
+const defaultScale = 10;
 
 export default {
   data () {
