@@ -2,16 +2,16 @@
   transition(name="image-zoom-fade", @before-enter="lockScroll")
     .__image-zoom__modal(v-show="visible", @click="modalClicked", :id="id")
       .__image-zoom__close-container
-        button.__image-zoom__close-button(@click.stop="openExternal") ↗
-        button.__image-zoom__close-button(@click.stop="close") &times;
+        button.__image-zoom__button.__image-zoom__close-button(@click.stop="openExternal") ↗
+        button.__image-zoom__button.__image-zoom__close-button(@click.stop="close") &times;
       .__image-zoom__img-outer-container(:style="{ display: verticalCenter ? 'table' : 'block' }")
         .__image-zoom__img-inner-container(:style="{ display: verticalCenter ? 'table-cell' : 'block' }")
           img(:src="src",:style="{ width: scaledWidth, height: scaledHeight }", ref="img", @load="autoScaleCalc()").__image-zoom__image
       .__image-zoom__scale-container(v-if="allowZoom")
         .__image-zoom__scaler
-          button.__image-zoom__scaleButton.__image-zoom__scaleButton-l(@click="scaleDown", :disabled="!canScaleDown") -
-          button.__image-zoom__scale(@click="scaleToggle") {{ scaleToShow }}
-          button.__image-zoom__scaleButton.__image-zoom__scaleButton-r(@click="scaleUp", :disabled="!canScaleUp") +
+          button.__image-zoom__button.__image-zoom__scaleButton.__image-zoom__scaleButton-l(@click="scaleDown", :disabled="!canScaleDown") -
+          button.__image-zoom__button.__image-zoom__scale(@click="scaleToggle") {{ scaleToShow }}
+          button.__image-zoom__button.__image-zoom__scaleButton.__image-zoom__scaleButton-r(@click="scaleUp", :disabled="!canScaleUp") +
 </template>
 
 <script>
@@ -162,7 +162,7 @@ export default {
 </script>
 
 <style lang="less">
-  button {
+  .__image-zoom__button {
     min-width:      2em;
     padding:        4px 0;
     text-align:     center;

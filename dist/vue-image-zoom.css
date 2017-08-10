@@ -1,4 +1,4 @@
-button {
+.__image-zoom__button {
   min-width: 2em;
   padding: 4px 0;
   text-align: center;
@@ -9,15 +9,15 @@ button {
   border: 2px solid #ddd;
   background: rgba(0, 0, 0, 0.1);
 }
-button:first-child {
+.__image-zoom__button:first-child {
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
 }
-button:last-child {
+.__image-zoom__button:last-child {
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
 }
-button:nth-child(n+2) {
+.__image-zoom__button:nth-child(n+2) {
   border-left: 0;
 }
 .__image-zoom__modal {
