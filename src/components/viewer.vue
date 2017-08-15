@@ -6,12 +6,12 @@
         button.__image-zoom__button.__image-zoom__close-button(@click.stop="close") &times;
       .__image-zoom__img-outer-container(:style="{ display: verticalCenter ? 'table' : 'block' }")
         .__image-zoom__img-inner-container(:style="{ display: verticalCenter ? 'table-cell' : 'block' }")
-          img(:src="src",:style="{ width: scaledWidth, height: scaledHeight }", ref="img", @load="autoScaleCalc()").__image-zoom__image
+          img(:src="src",:style="{ width: scaledWidth, height: scaledHeight }", ref="img", @load="autoScaleCalc()", @click.stop).__image-zoom__image
       .__image-zoom__scale-container(v-if="allowZoom")
         .__image-zoom__scaler
-          button.__image-zoom__button.__image-zoom__scaleButton.__image-zoom__scaleButton-l(@click="scaleDown", :disabled="!canScaleDown") -
-          button.__image-zoom__button.__image-zoom__scale(@click="scaleToggle") {{ scaleToShow }}
-          button.__image-zoom__button.__image-zoom__scaleButton.__image-zoom__scaleButton-r(@click="scaleUp", :disabled="!canScaleUp") +
+          button.__image-zoom__button.__image-zoom__scaleButton.__image-zoom__scaleButton-l(@click.stop="scaleDown", :disabled="!canScaleDown") -
+          button.__image-zoom__button.__image-zoom__scale(@click.stop="scaleToggle") {{ scaleToShow }}
+          button.__image-zoom__button.__image-zoom__scaleButton.__image-zoom__scaleButton-r(@click.stop="scaleUp", :disabled="!canScaleUp") +
 </template>
 
 <script>
