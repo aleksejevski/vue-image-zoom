@@ -17,7 +17,7 @@
 <script>
 
 const scaleList = [10, 25, 30, 33, 40, 50, 60, 67, 75, 90, 100, 110, 125, 150, 200, 250, 300, 400, 600, 800];
-const defaultScale = 10;
+const defaultScaleLevel = 10;
 
 export default {
   data () {
@@ -29,7 +29,7 @@ export default {
 
       allowZoom:      true,
       autoScale:      true,
-      scaleLevel:     defaultScale,
+      scaleLevel:     -1,
 
       closeOnClickModal: true,
 
@@ -106,7 +106,7 @@ export default {
       }
     },
     resetScale () {
-      this.scaleLevel = defaultScale;
+      this.scaleLevel = defaultScaleLevel;
     },
     autoScaleCalc () {
       const $img = this.$refs.img;
@@ -122,7 +122,7 @@ export default {
         const imgHeight = $img.offsetHeight;      // 2000
         const imgWidth = $img.offsetWidth;        // 1414
 
-        let currentScale = defaultScale;
+        let currentScale = defaultScaleLevel;
         // Step 1: Is the image widther than the screen? If yes, scale down until it's suitable.
         for (currentScale; currentScale > 0; currentScale--){
           let currentWidth = imgWidth * scaleList[currentScale] / 100
@@ -143,10 +143,10 @@ export default {
     },
 
     scaleToggle () {
-      if (this.scaleLevel === defaultScale) {
+      if (this.scaleLevel === defaultScaleLevel) {
         this.autoScaleCalc();
       } else {
-        this.setScale(defaultScale);
+        this.setScale(defaultScaleLevel);
       }
     },
 
@@ -218,7 +218,7 @@ export default {
     text-align:     center;
   }
   .__image-zoom__image {
-    background:     white;
+    background:     rgba(255, 255, 255, .1);
   }
 
   .__image-zoom__scale-container {

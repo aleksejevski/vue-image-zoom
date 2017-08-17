@@ -49,7 +49,7 @@
   text-align: center;
 }
 .__image-zoom__image {
-  background: white;
+  background: rgba(255, 255, 255, 0.1);
 }
 .__image-zoom__scale-container {
   position: fixed;
