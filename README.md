@@ -32,5 +32,5 @@ this.$zoom('/path/to/your/img', {
   allowZoom:          true,  // When false, zooming is not available. Image will be shown on 100% size.
   autoScale:          true,  // When true, if the image is larger than the screen, it will be automatically scaled down until suitable. Along with 'allowZoom'
   closeOnClickModal:  false, // When false, clicking modal layer will close the viewer.
-})
+});
 ```

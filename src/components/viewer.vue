@@ -151,7 +151,16 @@ export default {
     },
 
     openExternal () {
-      window.open(this.src);
+      const src = this.src;
+      if (!src.startsWith('data:image/')) {
+        window.open(src);
+      } else {
+        const w = window.open('about:blank');
+        const t = setTimeout(() => {
+          clearTimeout(t);
+          w.document.write(`<iframe width="100%" height="100%" frameborder="0" src="${src}"></iframe>`);
+        }, 0);
+      }
     },
 
     close () {
